@@ -23,8 +23,20 @@ function validarPass() {
       const usuarioEnLocalSTG = localSTG[i];
       array.push(usuarioEnLocalSTG);
     }
-    array.push({ id: localSTG.length++, user, pass, role: "admin" });
-    localStorage.setItem("usuario", JSON.stringify(array));
-    console.log(array);
+    //ahora voy a validar los usuarios, para que no guarde dos usuarios con el mismo nombre. Usando un filter. Con esto yo obtengo otro array, que puede ser con la misma o menor cantidad de elementos que el que estoy filtrando. 1ro creo una nueva variable para guardar los elementos filtrados, 2do filtro lo que necesito, 3ro lo hago con una funcion.
+    let userExist = localSTG.filter((x) => x.user === user);
+    // let passExist = localSTG.filter((x) => x.pass === pass);
+    //console.log(userExist);
+    //console.log(passExist);
+
+    if (userExist.length === 0 || passExist.length === 0) {
+      if (pass === validPass) {
+        array.push({ id: localSTG.length++, user, pass, role: "user" });
+        localStorage.setItem("usuario", JSON.stringify(array));
+      } else {
+        alert("las contraseñas no son iguales");
+      }
+    }
+    // console.log(array);
   }
 }
